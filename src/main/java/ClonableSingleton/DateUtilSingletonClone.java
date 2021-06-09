@@ -1,12 +1,14 @@
-package DateUtil;
+package ClonableSingleton;
+
+import DateUtil.DateUtilSingleton;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateUtilSingleton implements Serializable {
-    public static volatile DateUtilSingleton dateUtilSingleton = null;
-    private DateUtilSingleton() {
+public class DateUtilSingletonClone implements Cloneable {
+    public static volatile DateUtilSingletonClone dateUtilSingleton = null;
+    private DateUtilSingletonClone() {
 
     }
 
@@ -29,13 +31,12 @@ public class DateUtilSingleton implements Serializable {
 //     return dateUtilSingleton;
 //    }
 
-
-    public static DateUtilSingleton getInstance() {
+    public static DateUtilSingletonClone getInstance() {
         if(dateUtilSingleton == null) {
-            synchronized(DateUtilSingleton.class) {
+            synchronized(DateUtilSingletonClone.class) {
                 if(dateUtilSingleton == null ) {
                     System.out.println("--- creating instance ----");
-                    dateUtilSingleton = new DateUtilSingleton();
+                    dateUtilSingleton = new DateUtilSingletonClone();
                 }
             }
         }
@@ -48,9 +49,17 @@ public class DateUtilSingleton implements Serializable {
         return sFormat.format(today);
     }
 
-    public Object readResolve(){
-        System.out.println("---------In Read Resolve------------");
-        return dateUtilSingleton;
-    }
+//    public Object readResolve(){
+//        System.out.println("---------In Read Resolve------------");
+//        return dateUtilSingleton;
+//    }
 
+    public Object clone() throws CloneNotSupportedException {
+//        DateUtilSingleton dateUtilSingleton1 = (DateUtilSingleton) super.clone();
+//        return dateUtilSingleton1;
+
+
+//        return super.clone();
+        throw  new CloneNotSupportedException("Cloning is not supported For Singleton Object!");
+    }
 }
