@@ -1,11 +1,12 @@
 package DateUtil;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateUtilSingleton {
+public class DateUtilSingleton implements Serializable {
     public static volatile DateUtilSingleton dateUtilSingleton = null;
-    private DateUtilSingleton(){
+    private DateUtilSingleton() {
 
     }
 
@@ -41,13 +42,14 @@ public class DateUtilSingleton {
         return dateUtilSingleton;
     }
 
-
-
     public String getDate() {
         Date today = new Date();
         SimpleDateFormat sFormat = new SimpleDateFormat("dd-MMM-yyyy");
         return sFormat.format(today);
     }
 
+    public Object readResolve(){
+        return dateUtilSingleton;
+    }
 
 }
